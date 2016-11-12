@@ -77,9 +77,6 @@ class zdf_mediathek(Plugin):
         return Plugin.stream_weight(key)
 
     def _extract_streams(self, response):
-        if "priorityList" not in response:
-            self.logger.error("Invalid response! Contains no priorityList!")
-
         for priority in response["priorityList"]:
             for format_ in priority["formitaeten"]:
                 yield self._extract_from_format(format_)
@@ -103,7 +100,6 @@ class zdf_mediathek(Plugin):
                 qualities.update(option)
 
         return qualities
-            
 
     def _get_streams(self):
         match = _url_re.match(self.url)
